@@ -1,0 +1,13 @@
+argcomplete==3.6.3
+cbor2==5.8.0
+luma.core==2.5.3
+luma.emulator==1.5.0
+-e git+https://github.com/rm-hull/luma.examples.git@0e7e3daa2afd60754660897e5a915060a57fe731#egg=luma.examples
+luma.lcd==2.11.0
+luma.led-matrix==1.7.1
+luma.oled==3.14.0
+pillow==12.1.0
+psutil==7.2.1
+pygame==2.6.1
+RPi.GPIO==0.7.1
+smbus2==0.6.0
