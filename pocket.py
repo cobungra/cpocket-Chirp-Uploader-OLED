@@ -18,6 +18,7 @@ import subprocess
 import re
 import threading
 from display import show_selected, show_status, show_progress, clear, close as close_display, run_cmd_stream, show_report
+from config import PROFILES, mmaproot
 
 # Small startup message on display (if available)
 try:
@@ -25,16 +26,16 @@ try:
 except Exception:
     pass
 
-# Available colours: (name, rgb tuple, filename, radio model)
-PROFILES = [
-    ("green",  (0, 1, 0), "green.img","QYT_KT-WP12"),
-    ("yellow", (1, 0.3, 0), "yellow.img","QYT_KT-WP12"),
-    ("blue",   (0, 0.1, 1), "blue.img","QYT_KT-WP12"),
-    ("red",    (1, 0, 0), "red.img","QYT_KT-WP12"),
-    ("pink",   (1, 0.1, 0.1), "pink.img","Baofeng_UV-5R"),
-    ("cyan",   (0, 1, 1), "cyan.img","Baofeng_UV-5R"),
-    ("purple", (0.3, 0, 1), "purple.img","Baofeng_UV-5R"),
-]
+# Available profiles: (name, rgb tuple, filename, radio model)
+# PROFILES = [
+#     ("green",  (0, 1, 0), "green.img","QYT_KT-WP12"),
+#     ("yellow", (1, 0.3, 0), "yellow.img","QYT_KT-WP12"),
+#     ("blue",   (0, 0.1, 1), "blue.img","QYT_KT-WP12"),
+#     ("red",    (1, 0, 0), "red.img","QYT_KT-WP12"),
+#     ("pink",   (1, 0.1, 0.1), "pink.img","Baofeng_UV-5R"),
+#     ("cyan",   (0, 1, 1), "cyan.img","Baofeng_UV-5R"),
+#     ("purple", (0.3, 0, 1), "purple.img","Baofeng_UV-5R"),
+# ]
 SELECTED_INDEX = 0
 selected_colour = PROFILES[SELECTED_INDEX][0]
 

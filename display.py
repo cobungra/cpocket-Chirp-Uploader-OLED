@@ -100,7 +100,7 @@ except Exception as e:
 
 # Convenience helpers (optional)
 def show_selected(name, fname, radio=None):
-    title = f"Selected: {name}"
+    title = f"= {name}"
     details = f"File: {fname}" if fname else "Details:"
     radio_line = f"Radio: {radio}" if radio else "Radio:"
     display.show_lines([title, details, radio_line])
