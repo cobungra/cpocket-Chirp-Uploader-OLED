@@ -1,12 +1,11 @@
 # VK3MBT Pocket Programmer. Not for commercial use.
 # OLED Version to select named images to upload
 
-# ..adjust PROFILES [ ] array to suit your needs
-# In this example, colour names are used...
-# Green, Yellow, Blue, Red, Pink,Cyan, Purple
-# Button 1 - Select Colour
-# Button 2 - Upload selected colour named image and the connected radio
-# Button 3 - Download from Radio (will save to selected colour's radio folder)
+# ..adjust PROFILES [ ] array in config.py to match your images/radios.
+
+# Button 1 - Select Profile
+# Button 2 - Upload selected profile for that specific radio
+# Button 3 - Download from Radio (will save to selected profile's radio folder)
 # Long press Button 3 - Shutdown Pi
 
 from signal import pause
@@ -105,7 +104,7 @@ def write():
     print(f"Button 2 pressed. Uploading {radio} {fname} (selected={name})")
     # indicate running on display
     show_report("Uploading",fname, radio)
-    cmd = ["chirpc", "-r", f"{radio}", "--serial=/dev/ttyUSB0", f"--mmap=/home/pi/Radios/{directory}/{fname}", "--upload-mmap"]
+    cmd = ["chirpc", "-r", f"{radio}", "--serial=/dev/ttyUSB0", f"--mmap={mmaproot}/{directory}/{fname}", "--upload-mmap"]
     try:
         import subprocess
         proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, bufsize=1)
@@ -125,11 +124,11 @@ def write():
 def read():
     print("Button 3 pressed. Downloading from Radio.")
     name, rgb, fname, radio = PROFILES[SELECTED_INDEX]
-    base_mmap = f"/home/pi/Radios/{radio}/download.img"
+    base_mmap = f"{mmaproot}/{radio}/download.img"
     target_mmap = _next_incremental_filename(base_mmap)
     print(f"Saving download to {target_mmap}")
     # show_status(f"Downloading.")
-    show_report("Downloading","download[n]", radio)
+    show_report("Downloading","download[n] to", radio)
     cmd = ["chirpc", "-r", f"{radio}", "--serial=/dev/ttyUSB0", f"--mmap={target_mmap}", "--download-mmap"]
     try:
         import subprocess
