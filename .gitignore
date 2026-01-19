@@ -7,3 +7,4 @@
 pyvenv.cfg
 choose.py
 __pycache__/
+.git*
