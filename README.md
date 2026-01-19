@@ -10,7 +10,7 @@ With Chirp installed and one of these python scripts, it can upload preloaded im
 
 ## Quick usage
 - Create the desired radio image files using Chirp.
-- Copy the images to the Pi's SDcard (e.g. into /home/pi/Documents/RadioCode/) using the naming conventions described below.
+- Copy the images to the Pi's SDcard (e.g. into /home/pi/Documents/Radios/Baofeng_UV-5R/) using the naming conventions described below.
 
 In the field:
 - Run on the Pi (needs GPIO privileges and chirpc accessible in PATH):
@@ -24,20 +24,20 @@ In the field:
 - Raspberry Pi zero or other with the "pocket" GPIO daughterboard (see below)
 - Chirp radio software installed (includes chirpc the CLI)
 - Required cable from the Pi to the selected radio.
-- Customize the code to suit your own radio. I tested with a QYT WP12, Baofeng UV5R etc. 
+- Customize the config.py to suit your own radio. I tested with a QYT WP12, Baofeng UV5R etc. 
 
 While logged into the pi, `chirpc --list-radios` provides the names.
 pocket.py uses the radio name to use the correct profile for chirp and expects a subdirectory of that name for that radio's files.
 
-Adjust lines 27-33 the PROFILES[ ] array in pocket.py for your own names, filenames, radios. Adjust lines 104 & 124 to suit the locations of the radio files. 
+Adjust config.py PROFILES[ ] array in pocket.py for your own names, filenames, radios. Adjust config.py mmaproot to suit the locations of the radio files. 
 
 
 ## In Use:
 
 pocket.py: Three buttons
-- Button 1: Select one of the named images (e.g. Green/Yellow/Blue/Red/Pink/Cyan/Purple)
-- Button 2: Upload the named image (green.img / yellow.img .. etc)
-- Button 3: Downloads the current image from the radio and saves on the Pi as download[n].img in increasing numbers in the radio folder configured in `--mmap` (104,124) path to avoid overwriting existing files.
+- Button 1: Select one of the profile names (e.g. NSWJan23, VicDec12...)
+- Button 2: Uploads the selected named image (NSW_Q6.img, VIC_Q7.img...)
+- Button 3: Downloads the current image from the radio and saves on the Pi as download[n].img in increasing numbers in the radio folder configured {mmaproot}/{radioname} path to avoid overwriting existing files.
 
 Stop = Shutdown: Hold Button 3 for two seconds and release. (Pi will shutdown)
 
