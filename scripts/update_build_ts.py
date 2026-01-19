@@ -2,7 +2,7 @@
 """Update the BUILD_TS placeholder inside pocket.py with current YYMMDDHHMM timestamp.
 
 Usage: python3 scripts/update_build_ts.py [path/to/pocket.py]
-This script replaces the digits after the "Pocket 1.3 is ready. <<<<" text.
+This script replaces the digits after the ">>>> Pocket OLED is ready.." text.
 """
 import sys
 import re
@@ -21,9 +21,9 @@ text = p.read_text()
 lines = text.splitlines()
 changed = False
 for i, line in enumerate(lines):
-    if "Pocket is ready" in line:
+    if "Pocket OLED is ready" in line:
         # Replace any digits previously inserted after the marker
-        new_line = re.sub(r'(>>>> cPocket is ready.. \ )\s*\d*', r'\1 ' + ts, line)
+        new_line = re.sub(r'(>>>> Pocket OLED is ready.. \ )\s*\d*', r'\1 ' + ts, line)
         if new_line != line:
             lines[i] = new_line
             changed = True
@@ -42,7 +42,7 @@ if changed:
     sys.exit(0)
 
 # No line contained the marker; print diagnostics to help the user
-print("No target line found to update (expected a 'Pocket 1.3 is ready' line).")
+print("No target line found to update (expected a '>>>> Pocket OLED is ready..' line).")
 # Show any lines containing 'Pocket' or 'ready' to help debug
 found = False
 for i, line in enumerate(lines, start=1):

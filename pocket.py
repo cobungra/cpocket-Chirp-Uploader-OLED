@@ -1,5 +1,5 @@
 # VK3MBT Pocket Programmer. Not for commercial use.
-# Version to select colour named images to upload
+# OLED Version to select named images to upload
 # Green, Yellow, Blue, Red, Pink,Cyan, Purple
 # Button 1 - Select Colour
 # Button 2 - Upload selected colour named image and the connected radio
@@ -231,7 +231,7 @@ except Exception as e:
     t = threading.Thread(target=_polling_loop, daemon=True)
     t.start()
 
-print(">>>> cPocket OLED is ready..  ") 
+print(">>>> Pocket OLED is ready..   2601191326") 
 print("Waiting for button press...")
 show_report("Pocket: CHIRP","1-Select", "2-Upld 3-Dwnld")
 sleep(5)
