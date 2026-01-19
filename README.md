@@ -29,7 +29,7 @@ In the field:
 While logged into the pi, `chirpc --list-radios` provides the names.
 pocket.py uses the radio name to use the correct profile for chirp and expects a subdirectory of that name for that radio's files.
 
-Adjust lines 27-33 the COLORS[ ] array in pocket.py for your own names, filenames, radios. Adjust lines 104 & 124 to suit the locations of the radio files. 
+Adjust lines 27-33 the PROFILES[ ] array in pocket.py for your own names, filenames, radios. Adjust lines 104 & 124 to suit the locations of the radio files. 
 
 
 ## In Use:

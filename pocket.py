@@ -1,7 +1,7 @@
 # VK3MBT Pocket Programmer. Not for commercial use.
 # OLED Version to select named images to upload
 
-# ..adjust COLORS [ ] array to suit your needs
+# ..adjust PROFILES [ ] array to suit your needs
 # In this example, colour names are used...
 # Green, Yellow, Blue, Red, Pink,Cyan, Purple
 # Button 1 - Select Colour
@@ -26,7 +26,7 @@ except Exception:
     pass
 
 # Available colours: (name, rgb tuple, filename, radio model)
-COLORS = [
+PROFILES = [
     ("green",  (0, 1, 0), "green.img","QYT_KT-WP12"),
     ("yellow", (1, 0.3, 0), "yellow.img","QYT_KT-WP12"),
     ("blue",   (0, 0.1, 1), "blue.img","QYT_KT-WP12"),
@@ -36,14 +36,14 @@ COLORS = [
     ("purple", (0.3, 0, 1), "purple.img","Baofeng_UV-5R"),
 ]
 SELECTED_INDEX = 0
-selected_colour = COLORS[SELECTED_INDEX][0]
+selected_colour = PROFILES[SELECTED_INDEX][0]
 
 # Dry run support via POCKET_DRY_RUN (useful when developing off-device)
 DRY_RUN = os.getenv("POCKET_DRY_RUN", "").lower() in ("1", "true", "yes")
 
 # Set initial display to match the selected colour
 try:
-    show_selected(COLORS[SELECTED_INDEX][0], COLORS[SELECTED_INDEX][2], COLORS[SELECTED_INDEX][3])
+    show_selected(PROFILES[SELECTED_INDEX][0], PROFILES[SELECTED_INDEX][2], PROFILES[SELECTED_INDEX][3])
 except Exception:
     pass
 
@@ -86,8 +86,8 @@ def _next_incremental_filename(path):
 def select():
     """Cycle the selected colour and update the LED."""
     global SELECTED_INDEX, selected_colour
-    SELECTED_INDEX = (SELECTED_INDEX + 1) % len(COLORS)
-    name, rgb, fname, radio = COLORS[SELECTED_INDEX]
+    SELECTED_INDEX = (SELECTED_INDEX + 1) % len(PROFILES)
+    name, rgb, fname, radio = PROFILES[SELECTED_INDEX]
     selected_colour = name
     directory =  radio
     print(f"Button 1 Select colour pressed. Selected: {name}")
@@ -99,7 +99,7 @@ def select():
 
 def write():
     """Upload the currently selected colour's image."""
-    name, rgb, fname, radio = COLORS[SELECTED_INDEX]
+    name, rgb, fname, radio = PROFILES[SELECTED_INDEX]
     directory = radio 
     print(f"Button 2 pressed. Uploading {radio} {fname} (selected={name})")
     # indicate running on display
@@ -123,7 +123,7 @@ def write():
     print("Waiting for button press...")
 def read():
     print("Button 3 pressed. Downloading from Radio.")
-    name, rgb, fname, radio = COLORS[SELECTED_INDEX]
+    name, rgb, fname, radio = PROFILES[SELECTED_INDEX]
     base_mmap = f"/home/pi/Radios/{radio}/download.img"
     target_mmap = _next_incremental_filename(base_mmap)
     print(f"Saving download to {target_mmap}")
@@ -238,7 +238,7 @@ print(">>>> Pocket OLED is ready..   2601191326")
 print("Waiting for button press...")
 show_report("Pocket: CHIRP","1-Select", "2-Upld 3-Dwnld")
 sleep(5)
-name, rgb, fname, radio = COLORS[0]
+name, rgb, fname, radio = PROFILES[0]
 show_selected(name, fname, radio)
 
 try:
