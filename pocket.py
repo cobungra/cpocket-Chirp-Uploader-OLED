@@ -1,5 +1,8 @@
 # VK3MBT Pocket Programmer. Not for commercial use.
 # OLED Version to select named images to upload
+
+# ..adjust COLORS [ ] array to suit your needs
+# In this example, colour names are used...
 # Green, Yellow, Blue, Red, Pink,Cyan, Purple
 # Button 1 - Select Colour
 # Button 2 - Upload selected colour named image and the connected radio
