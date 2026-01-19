@@ -1,0 +1,101 @@
+# pocket - Headless Chirp uploader for Raspberry Pi
+![pocketpi programmer](https://github.com/cobungra/pocket/blob/main/assets/pocketpi2.png )
+
+This is a simple device and software to help reprogram ham radios in the field.
+The device plugs onto a Raspberry Pi Zero.
+
+With Chirp installed and one of these python scripts, it can upload preloaded images from the SDcard to the radio, or download the current installed image to a file.
+
+
+
+## Quick usage
+- Create the desired radio image files using Chirp.
+- Copy the images to the Pi's SDcard (e.g. into /home/pi/Documents/RadioCode/) using the naming conventions described below.
+
+In the field:
+- Run on the Pi (needs GPIO privileges and chirpc accessible in PATH):
+- Use the buttons to upload or download images.
+
+```bash
+/path/to/env/bin/python /path/to/pocket.py 
+```
+
+## Requires: 
+- Raspberry Pi zero or other with the "pocket" GPIO daughterboard (see below)
+- Chirp radio software installed (includes chirpc the CLI)
+- Required cable from the Pi to the selected radio.
+- Customize the code to suit your own radio. I tested with a QYT WP12 etc. (pocket.py: Lines 27-33, 104,124). Edit the file to reflect your needs (ie name of radio). While logged into the pi, `chirpc --list-radios` provides the names.
+
+
+## In Use:
+
+pocket.py: Three buttons
+- Button 1: Select one of the named images (e.g. Green/Yellow/Blue/Red/Pink/Cyan/Purple)
+- Button 2: Upload the named image (green.img / yellow.img .. etc)
+- Button 3: Downloads the current image from the radio and saves on the Pi as download[n].img in increasing numbers in the radio folder configured in `--mmap` (104,124) path to avoid overwriting existing files.
+
+Stop = Shutdown: Hold Button 3 for two seconds and release. (Pi will shutdown)
+
+---------------------------------------------------------------
+
+Error handling
+- Some radios may return transient warnings like: "WARNING: Short reading 1 bytes from the 2 requested." In most cases uploads/downloads still finish successfully.
+
+-------------------------------------------------------------------
+## Parts list
+
+PCB or suitable breadboard.
+
+2   20 pin female headers
+
+3   Tactile buttons
+
+1   SSD1306 0.96" display - two colour is nice.
+
+
+## Construction:
+
+- Straightforward, check the pinout of SSD1306 THEY can DIFFER!
+- Perhaps put the pi in a plastic box with exposed pins, but in any case ensure that the board canot short or foul the pi's circuitry!
+- I take no reponsibility for unintended consequences of this project.
+- The code is minimal and works for me. Improve it as you see fit.
+
+
+## PCB / Wiring
+
+- GPIO 13 > Switch 1 > Gnd
+- GPIO 19 > Switch 2 > Gnd
+- GPIO 26 > Switch 3 > Gnd
+
+- GPIO 2  > SSD1306 SDA
+- GPIO 3  > SSD1306 SCL
+- 3.3v    > SSD1306 Vcc
+- Gnd     > SSD1306 Gnd
+
+## Programming in Python venv
+n.b. These are only examples of code.
+This is a good idea because Python will need extensive libraries like luma..
+- Create your venv: 
+```bash
+$ python -m venv pocket
+```
+- Copy the requirements.txt and the .py files to the env directory
+- Activate the venv and install the python requirements
+```bash
+$ source pocket/bin/activate
+(pocket) 
+$ pip3 install -r requirements.txt
+$ deactivate
+```
+- Test the program:
+```bash
+/path/to/env/bin/python /path/to/pocket.py 
+```
+To run headless I recommend starting the program automatically at boot using systemd. (see docs/autostart for an example)
+
+
+![PCB](https://github.com/cobungra/pocket/blob/main/assets/pcb004.png)
+
+
+
+VK3MBT
