@@ -36,12 +36,12 @@ except Exception:
 #     ("purple", (0.3, 0, 1), "purple.img","Baofeng_UV-5R"),
 # ]
 SELECTED_INDEX = 0
-selected_colour = PROFILES[SELECTED_INDEX][0]
+selected_name = PROFILES[SELECTED_INDEX][0]
 
 # Dry run support via POCKET_DRY_RUN (useful when developing off-device)
 DRY_RUN = os.getenv("POCKET_DRY_RUN", "").lower() in ("1", "true", "yes")
 
-# Set initial display to match the selected colour
+# Set initial display to match the selected profile
 try:
     show_selected(PROFILES[SELECTED_INDEX][0], PROFILES[SELECTED_INDEX][2], PROFILES[SELECTED_INDEX][3])
 except Exception:
@@ -84,13 +84,13 @@ def _next_incremental_filename(path):
 
 
 def select():
-    """Cycle the selected colour and update the LED."""
-    global SELECTED_INDEX, selected_colour
+    """Cycle the selected profile (and update the LED)."""
+    global SELECTED_INDEX, selected_name
     SELECTED_INDEX = (SELECTED_INDEX + 1) % len(PROFILES)
     name, rgb, fname, radio = PROFILES[SELECTED_INDEX]
-    selected_colour = name
+    selected_name = name
     directory =  radio
-    print(f"Button 1 Select colour pressed. Selected: {name}")
+    print(f"Button 1 Select profile pressed. Selected: {name}")
     try:
         show_selected(name, fname, radio)
     except Exception:
@@ -98,7 +98,7 @@ def select():
     print("Waiting for button press...")
 
 def write():
-    """Upload the currently selected colour's image."""
+    """Upload the currently selected profile's image."""
     name, rgb, fname, radio = PROFILES[SELECTED_INDEX]
     directory = radio 
     print(f"Button 2 pressed. Uploading {radio} {fname} (selected={name})")
@@ -234,7 +234,7 @@ except Exception as e:
     t = threading.Thread(target=_polling_loop, daemon=True)
     t.start()
 
-print(">>>> Pocket OLED is ready..   2601191326") 
+print(">>>> Pocket OLED is ready..   2601201016") 
 print("Waiting for button press...")
 show_report("Pocket: CHIRP","1-Select", "2-Upld 3-Dwnld")
 sleep(5)
