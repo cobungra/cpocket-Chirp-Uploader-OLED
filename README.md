@@ -73,8 +73,11 @@ PCB or suitable breadboard.
 - Gnd     > SSD1306 Gnd
 
 ## Programming in Python venv
-n.b. These are only examples of code.
+
 This is a good idea because Python will need extensive libraries like luma..
+
+*n.b. These are only examples of code.*
+
 - Create your venv: 
 ```bash
 $ python -m venv pocket
