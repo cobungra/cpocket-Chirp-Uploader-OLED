@@ -24,7 +24,12 @@ In the field:
 - Raspberry Pi zero or other with the "pocket" GPIO daughterboard (see below)
 - Chirp radio software installed (includes chirpc the CLI)
 - Required cable from the Pi to the selected radio.
-- Customize the code to suit your own radio. I tested with a QYT WP12 etc. (pocket.py: Lines 27-33, 104,124). Edit the file to reflect your needs (ie name of radio). While logged into the pi, `chirpc --list-radios` provides the names.
+- Customize the code to suit your own radio. I tested with a QYT WP12, Baofeng UV5R etc. 
+
+While logged into the pi, `chirpc --list-radios` provides the names.
+pocket.py uses the radio name to use the correct profile for chirp and expects a subdirectory of that name for that radio's files.
+
+Adjust lines 27-33 the COLORS[ ] array in pocket.py for your own names, filenames, radios. Adjust lines 104 & 124 to suit the locations of the radio files. 
 
 
 ## In Use:
@@ -94,6 +99,7 @@ $ deactivate
 ```bash
 /path/to/env/bin/python /path/to/pocket.py 
 ```
+
 To run headless I recommend starting the program automatically at boot using systemd. (see docs/autostart for an example)
 
 
