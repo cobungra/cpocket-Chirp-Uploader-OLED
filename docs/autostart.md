@@ -12,7 +12,7 @@ Description=Pocket programmer
 After=multi-user.target
 
 [Service]
-ExecStart=/usr/bin/python3 /home/pi/python/pocket/pocket.py
+ExecStart=/path/to/env/bin/python /path/to/pocket.py
 RemainAfterExit=true
 
 [Install]
