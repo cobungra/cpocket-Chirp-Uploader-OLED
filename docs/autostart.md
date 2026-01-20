@@ -9,7 +9,7 @@ Add the configuration like:
 ```
 [Unit]
 Description=Pocket programmer
-After=multi-user.target
+After=network.target
 
 [Service]
 ExecStart=/path/to/env/bin/python /path/to/pocket.py
