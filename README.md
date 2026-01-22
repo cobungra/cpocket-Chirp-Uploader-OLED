@@ -1,5 +1,5 @@
 # pocket - Headless Chirp uploader for Raspberry Pi
-![pocketpi programmer](https://github.com/cobungra/cpocket/blob/main/assets/oledprog.png )
+![pocketpi programmer](https://github.com/cobungra/cpocket/blob/main/assets/cpocket.jpg )
 
 This is a simple device and software to help reprogram ham radios in the field.
 The device plugs onto a Raspberry Pi Zero.
