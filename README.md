@@ -16,7 +16,7 @@ With Chirp installed and these python scripts, it can upload preloaded images fr
 
 In the field:
 - Run on the Pi (needs GPIO privileges and chirpc accessible in PATH)
-- Downloads will be possible once an upload of the required radio has been provided. (Otherwise pocket has no way of selecting from the hundreds of possible radio profiles.)
+- Downloads will be possible when pocket can see an image for required radio in the /images folder. (Otherwise pocket has no way of selecting from the hundreds of possible radio profiles.)
 - Use the buttons to upload or download images.
 
 ```bash
@@ -29,7 +29,7 @@ In the field:
 - Required cable from the Pi to the selected radio.
 
 While logged into the pi, `chirpc --list-radios` provides the required {radio} names.
-pocket.py uses the radio name at the head of your filename to apply the correct profile for chirp. 
+pocket.py uses the radio name at the head of your filename to apply the correct profile for chirpc. 
 
 
 ## In Use:
