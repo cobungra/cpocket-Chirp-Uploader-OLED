@@ -1,5 +1,5 @@
 # cpocket - Portable Chirp uploader for Raspberry Pi Zero
-![pocketpi programmer](https://github.com/cobungra/cpocket/blob/main/assets/OLEDpocket.png )
+![pocketpi programmer](https://github.com/cobungra/cpocket-Chirp-Uploader-OLED/blob/main/assets/OLEDpocket.png )
 
 This is a simple device and software to help reprogram ham radios in the field.
 The device plugs onto a Raspberry Pi Zero.
