@@ -99,11 +99,16 @@ except Exception as e:
 
 
 # Convenience helpers (optional)
-def show_selected(name, fname, radio=None):
-    title = f"= {name}"
-    details = f"File: {fname}" if fname else "Details:"
-    radio_line = f"Radio: {radio}" if radio else "Radio:"
-    display.show_lines([title, details, radio_line])
+
+def show_selected(radio, model, name):
+    title = f"R: {radio}"
+    model_line = f"M: {model}" if model else ""
+    details = f"F: {name}" if name else "Details:"
+    lines = [title]
+    if model_line:
+        lines.append(model_line)
+    lines.append(details)
+    display.show_lines(lines)
 
 
 
