@@ -141,10 +141,10 @@ def write():
     clear()
     if not success:
         show_status("Upload complete")
-        show_selected(name, fname, radio)
+        show_selected(radio, model, name)
     else:
         show_status("Upload complete")
-        show_selected(name, fname, radio)
+        show_selected(radio, model, name)
     print("Waiting for button press...")
 def read():
     print("Button 3 pressed. Downloading from Radio.")
@@ -166,10 +166,10 @@ def read():
     clear()
     if success:
         show_status(f"Saved to {target_mmap}")
-        show_selected(name, fname, radio)
+        show_selected(radio, model, name)
     else:
         show_status("Download complete")
-        show_selected(name, fname, radio)
+        show_selected(radio, model, name)
     print("Waiting for button press...")
 
 def shutdown_pi():

@@ -12,7 +12,7 @@ With Chirp installed and these python scripts, it can upload preloaded images fr
 ## Quick usage
 - Create the desired radio image files using Chirp.
 - Save the file as {radioname}_yourtext.img e.g. Baofeng_UV-5R_20260126b.img 
-- Copy the images to the /images directory on Pi's SDcard (e.g. into /home/pi/python/pocket/images) using the naming conventions described above.
+- Copy the images to the images/ directory on Pi's SDcard (e.g. into /home/pi/python/pocket/images) using the naming conventions described above.
 
 In the field:
 - Run on the Pi (needs GPIO privileges and chirpc accessible in PATH)
@@ -37,7 +37,7 @@ pocket.py uses the radio name at the head of your filename to apply the correct 
 pocket.py: Three buttons
 - Button 1: Select one of the profile names (e.g. Boafeng_KG-UV5_NSW7.img, QYT_KT-WP12_1105v.img ... etc)
 - Button 2: Uploads the selected named image using the radioname profile.
-- Button 3: Downloads the current image from the radio and saves on the Pi as {radio}_download[n].img in increasing numbers in the /images folder to avoid overwriting existing files.
+- Button 3: Downloads the current image from the radio and saves on the Pi as {radio}_download[n].img in increasing numbers in the images/ folder to avoid overwriting existing files.
 
 Stop = Shutdown: Hold Button 3 for two seconds and release. (Pi will shutdown)
 
