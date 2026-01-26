@@ -4,17 +4,19 @@
 This is a simple device and software to help reprogram ham radios in the field.
 The device plugs onto a Raspberry Pi Zero.
 
-With Chirp installed and one of these python scripts, it can upload preloaded images from the SDcard to the radio, or download the current installed image to a file.
+With Chirp installed and these python scripts, it can upload preloaded images from the SDcard to the radio, or download the current installed image to a file.
 
 (There are simpler versions of this device which do not need OLED display and dependencies: Refer to https://github.com/cobungra/pocket)
 
 
 ## Quick usage
 - Create the desired radio image files using Chirp.
-- Copy the images to the Pi's SDcard (e.g. into /home/pi/Documents/Radios/Baofeng_UV-5R/) using the naming conventions described below.
+- Save the file as {radioname}_yourtext.img e.g. Baofeng_UV-5R_20260126b.img 
+- Copy the images to the /images directory on Pi's SDcard (e.g. into /home/pi/python/pocket/images) using the naming conventions described above.
 
 In the field:
-- Run on the Pi (needs GPIO privileges and chirpc accessible in PATH):
+- Run on the Pi (needs GPIO privileges and chirpc accessible in PATH)
+- Downloads will be possible when pocket can see an image for required radio in the /images folder. (Otherwise pocket has no way of selecting from the hundreds of possible radio profiles.)
 - Use the buttons to upload or download images.
 
 ```bash
@@ -25,20 +27,17 @@ In the field:
 - Raspberry Pi zero or other with the "pocket" GPIO daughterboard (see below)
 - Chirp radio software installed (includes chirpc the CLI)
 - Required cable from the Pi to the selected radio.
-- Customize the config.py to suit your own radio. I tested with a QYT WP12, Baofeng UV5R etc. 
 
-While logged into the pi, `chirpc --list-radios` provides the names.
-pocket.py uses the radio name to use the correct profile for chirp and expects a subdirectory of that name for that radio's files.
-
-Adjust config.py PROFILES[ ] array in pocket.py for your own names, filenames, radios. Adjust config.py mmaproot to suit the locations of the radio files. 
+While logged into the pi, `chirpc --list-radios` provides the required {radio} names.
+pocket.py uses the radio name at the head of your filename to apply the correct profile for chirpc. 
 
 
 ## In Use:
 
 pocket.py: Three buttons
-- Button 1: Select one of the profile names (e.g. NSWJan23, VicDec12...)
-- Button 2: Uploads the selected named image (NSW_Q6.img, VIC_Q7.img...)
-- Button 3: Downloads the current image from the radio and saves on the Pi as download[n].img in increasing numbers in the radio folder configured {mmaproot}/{radioname} path to avoid overwriting existing files.
+- Button 1: Select one of the profile names (e.g. Boafeng_KG-UV5_NSW7.img, QYT_KT-WP12_1105v.img ... etc)
+- Button 2: Uploads the selected named image using the radioname profile.
+- Button 3: Downloads the current image from the radio and saves on the Pi as {radio}_download[n].img in increasing numbers in the /images folder to avoid overwriting existing files.
 
 Stop = Shutdown: Hold Button 3 for two seconds and release. (Pi will shutdown)
 

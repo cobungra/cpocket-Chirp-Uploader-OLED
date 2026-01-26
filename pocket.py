@@ -17,7 +17,29 @@ import subprocess
 import re
 import threading
 from display import show_selected, show_status, show_progress, clear, close as close_display, run_cmd_stream, show_report
-from config import PROFILES, mmaproot
+
+# Dynamically read profiles from images directory
+IMAGES_DIR = os.path.join(os.path.dirname(__file__), "images")
+
+def get_profiles():
+    profiles = []
+    for fname in os.listdir(IMAGES_DIR):
+        if fname.endswith(".img"):
+            base = fname[:-4]
+            if "_" in base:
+                radio, name = base.rsplit("_", 1)
+                # Split radio and model at the first underscore
+                if "_" in radio:
+                    radio_part, model = radio.split("_", 1)
+                else:
+                    radio_part, model = radio, ""
+                # Also keep the original radio string for chirpc compatibility
+                profiles.append((name, (1,1,1), fname, radio_part, model, radio))
+    return profiles
+
+PROFILES = get_profiles()
+SELECTED_INDEX = 0
+selected_name = PROFILES[SELECTED_INDEX][0] if PROFILES else None
 
 # Small startup message on display (if available)
 try:
@@ -85,26 +107,29 @@ def _next_incremental_filename(path):
 
 def select():
     """Cycle the selected profile (and update the LED)."""
-    global SELECTED_INDEX, selected_name
+    global SELECTED_INDEX, selected_name, PROFILES
+    PROFILES = get_profiles()  # Refresh in case files changed
+    if not PROFILES:
+        print("No profiles found in images directory.")
+        return
     SELECTED_INDEX = (SELECTED_INDEX + 1) % len(PROFILES)
-    name, rgb, fname, radio = PROFILES[SELECTED_INDEX]
+    name, rgb, fname, radio, model, radio_full = PROFILES[SELECTED_INDEX]
     selected_name = name
-    directory =  radio
-    print(f"Button 1 Select profile pressed. Selected: {name}")
+    print(f"Button 1 Select profile pressed. Selected: {name} ({radio}, {model})")
     try:
-        show_selected(name, fname, radio)
+        show_selected(radio, model, name)
     except Exception:
         pass
     print("Waiting for button press...")
 
 def write():
     """Upload the currently selected profile's image."""
-    name, rgb, fname, radio = PROFILES[SELECTED_INDEX]
-    directory = radio 
-    print(f"Button 2 pressed. Uploading {radio} {fname} (selected={name})")
+    name, rgb, fname, radio, model, radio_full = PROFILES[SELECTED_INDEX]
+    print(f"Button 2 pressed. Uploading {radio_full} {fname} (selected={name})")
     # indicate running on display
-    show_report("Uploading",fname, radio)
-    cmd = ["chirpc", "-r", f"{radio}", "--serial=/dev/ttyUSB0", f"--mmap={mmaproot}/{directory}/{fname}", "--upload-mmap"]
+    show_report("Uploading", name, radio_full)
+    img_path = os.path.join(IMAGES_DIR, fname)
+    cmd = ["chirpc", "-r", radio_full, "--serial=/dev/ttyUSB0", f"--mmap={img_path}", "--upload-mmap"]
     try:
         import subprocess
         proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, bufsize=1)
@@ -123,13 +148,12 @@ def write():
     print("Waiting for button press...")
 def read():
     print("Button 3 pressed. Downloading from Radio.")
-    name, rgb, fname, radio = PROFILES[SELECTED_INDEX]
-    base_mmap = f"{mmaproot}/{radio}/download.img"
+    name, rgb, fname, radio, model, radio_full = PROFILES[SELECTED_INDEX]
+    base_mmap = os.path.join(IMAGES_DIR, f"{radio_full}_download.img")
     target_mmap = _next_incremental_filename(base_mmap)
     print(f"Saving download to {target_mmap}")
-    # show_status(f"Downloading.")
-    show_report("Downloading","download[n] to", radio)
-    cmd = ["chirpc", "-r", f"{radio}", "--serial=/dev/ttyUSB0", f"--mmap={target_mmap}", "--download-mmap"]
+    show_report("Downloading", radio_full, "download[n]")
+    cmd = ["chirpc", "-r", radio_full, "--serial=/dev/ttyUSB0", f"--mmap={target_mmap}", "--download-mmap"]
     try:
         import subprocess
         proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, bufsize=1)
@@ -238,8 +262,8 @@ print(">>>> Pocket OLED is ready..   2601201016")
 print("Waiting for button press...")
 show_report("Pocket: CHIRP","1-Select", "2-Upld 3-Dwnld")
 sleep(5)
-name, rgb, fname, radio = PROFILES[0]
-show_selected(name, fname, radio)
+name, rgb, fname, radio, model, radio_full = PROFILES[0]
+show_selected(radio, model, name)
 
 try:
     pause()  # wait indefinitely until signal (callbacks will run)
