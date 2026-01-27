@@ -1,11 +1,9 @@
 # VK3MBT Pocket Programmer. Not for commercial use.
 # OLED Version to select named images to upload
 
-# ..adjust PROFILES [ ] array in config.py to match your images/radios.
-
 # Button 1 - Select Profile
 # Button 2 - Upload selected profile for that specific radio
-# Button 3 - Download from Radio (will save to selected profile's radio folder)
+# Button 3 - Download from Radio (will save as selected profile's radio name with incremental numbering)
 # Long press Button 3 - Shutdown Pi
 
 from signal import pause
@@ -47,16 +45,6 @@ try:
 except Exception:
     pass
 
-# Available profiles: (name, rgb tuple, filename, radio model)
-# PROFILES = [
-#     ("green",  (0, 1, 0), "green.img","QYT_KT-WP12"),
-#     ("yellow", (1, 0.3, 0), "yellow.img","QYT_KT-WP12"),
-#     ("blue",   (0, 0.1, 1), "blue.img","QYT_KT-WP12"),
-#     ("red",    (1, 0, 0), "red.img","QYT_KT-WP12"),
-#     ("pink",   (1, 0.1, 0.1), "pink.img","Baofeng_UV-5R"),
-#     ("cyan",   (0, 1, 1), "cyan.img","Baofeng_UV-5R"),
-#     ("purple", (0.3, 0, 1), "purple.img","Baofeng_UV-5R"),
-# ]
 SELECTED_INDEX = 0
 selected_name = PROFILES[SELECTED_INDEX][0]
 
