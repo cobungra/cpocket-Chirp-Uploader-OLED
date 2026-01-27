@@ -105,7 +105,7 @@ def select():
     selected_name = name
     print(f"Button 1 Select profile pressed. Selected: {name} ({radio}, {model})")
     try:
-        show_selected(radio, model, name)
+        show_selected(radio, model, name, "1-Select 2-Upld 3-Dwnld")
     except Exception:
         pass
     print("Waiting for button press...")
@@ -129,10 +129,10 @@ def write():
     clear()
     if not success:
         show_status("Upload complete")
-        show_selected(radio, model, name)
+        show_selected(radio, model, name, "1-Select 2-Upld 3-Dwnld")
     else:
         show_status("Upload complete")
-        show_selected(radio, model, name)
+        show_selected(radio, model, name, "1-Select 2-Upld 3-Dwnld")
     print("Waiting for button press...")
 def read():
     print("Button 3 pressed. Downloading from Radio.")
@@ -154,10 +154,10 @@ def read():
     clear()
     if success:
         show_status(f"Saved to {target_mmap}")
-        show_selected(radio, model, name)
+        show_selected(radio, model, name, "1-Select 2-Upld 3-Dwnld")
     else:
         show_status("Download complete")
-        show_selected(radio, model, name)
+        show_selected(radio, model, name, "1-Select 2-Upld 3-Dwnld")
     print("Waiting for button press...")
 
 def shutdown_pi():
@@ -246,12 +246,12 @@ except Exception as e:
     t = threading.Thread(target=_polling_loop, daemon=True)
     t.start()
 
-print(">>>> Pocket OLED is ready..   2601201016") 
+print(">>>> Pocket OLED is ready..   2601272101") 
 print("Waiting for button press...")
 show_report("Pocket: CHIRP","1-Select", "2-Upld 3-Dwnld")
 sleep(5)
 name, rgb, fname, radio, model, radio_full = PROFILES[0]
-show_selected(radio, model, name)
+show_selected(radio, model, name, "1-Select 2-Upld 3-Dwnld")
 
 try:
     pause()  # wait indefinitely until signal (callbacks will run)

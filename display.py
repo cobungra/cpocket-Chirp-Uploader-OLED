@@ -51,7 +51,7 @@ try:
             # draw lines with simple vertical spacing
             with canvas(self.device) as draw:
                 for i, line in enumerate(lines[: int(HEIGHT / 8)]):
-                    draw.text((0, i * 20), str(line), font=FONT, fill="white")
+                    draw.text((0, i * 16), str(line), font=FONT, fill="white")
 
         def show_message(self, text):
             self.show_lines([text])
@@ -99,8 +99,8 @@ except Exception as e:
 
 
 # Convenience helpers (optional)
-
-def show_selected(radio, model, name):
+##
+def show_selected(radio, model, name, prompt=None):
     title = f"R: {radio}"
     model_line = f"M: {model}" if model else ""
     details = f"F: {name}" if name else "Details:"
@@ -108,8 +108,33 @@ def show_selected(radio, model, name):
     if model_line:
         lines.append(model_line)
     lines.append(details)
+    # If prompt is provided, display it in small font if possible
+    if prompt:
+        try:
+            # If using luma, draw prompt in small font at the bottom
+            if hasattr(display, 'device'):
+                from luma.core.render import canvas
+                with canvas(display.device) as draw:
+                    for i, line in enumerate(lines[: int(HEIGHT / 8) - 1]):
+                        draw.text((0, i * 16), str(line), font=FONT, fill="white")
+                    draw.text((0, HEIGHT - 10), str(prompt), font=FONT_SMALL, fill="white")
+                return
+        except Exception:
+            pass
+        # Fallback: append prompt as last line
+        lines.append(prompt)
     display.show_lines(lines)
-
+##
+# def show_selected(radio, model, name):
+#     title = f"R: {radio}"
+#     model_line = f"M: {model}" if model else ""
+#     details = f"F: {name}" if name else "Details:"
+#     lines = [title]
+#     if model_line:
+#         lines.append(model_line)
+#     lines.append(details)
+#     display.show_lines(lines)
+##
 
 
 def show_report(name, fname, radio=None):
