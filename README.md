@@ -95,6 +95,7 @@ $ source pocket/bin/activate
 $ pip3 install -r requirements.txt
 $ deactivate
 ```
+- Enable i2c on the Pi using raspi-config
 - Test the program:
 ```bash
 /path/to/env/bin/python /path/to/pocket.py 
